@@ -1,10 +1,9 @@
-//import POM into Test
-import { test, expect } from '@playwright/test';
-import { createAccountPage } from '../pages/createAccount';
+import { test } from '@playwright/test';
+import { CreateAccountPage } from '../pages/createAccount';
 
 test ('Question 2-1' , async ({page}) => {
     
-    const accountPage = new createAccountPage(page);
+    const accountPage = new CreateAccountPage(page);
 
     //Test Data
     const name = 'ayam';

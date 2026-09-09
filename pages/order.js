@@ -1,33 +1,19 @@
 import {expect} from '@playwright/test';
 
-export class orderPage {
+export class OrderPage {
   constructor(page) {
     this.page = page;
   }
   
-  async closeAdIfVisible() {
-    const ads = this.page.locator('ins.adsbygoogle');
-    console.log('Ads count:', await ads.count());
-    for (let i = 0; i < await ads.count(); i++) {
-      console.log(
-        'Ad',
-        i,
-        'visible:', await ads.nth(i).isVisible(),
-        'box:', await ads.nth(i).boundingBox()
-      );
-    }
-  }
-
-async addToCart() {
-  const product = this.page
+  async addToCart() {
+    const product = this.page
     .locator('.single-products')
     .filter({
       has: this.page.locator('a[data-product-id="1"]')
     })
     .first();
 
-  const addToCart = product
-    .locator('.productinfo a[data-product-id="1"].add-to-cart');
+  const addToCart = product.locator('.productinfo a[data-product-id="1"].add-to-cart');
 
   await expect(addToCart).toBeVisible();
 
@@ -39,14 +25,14 @@ async addToCart() {
   });
   await expect(message).toBeVisible();
 
-await this.page.getByRole('button', {
-  name: 'Continue Shopping'
+  await this.page.getByRole('button', {
+    name: 'Continue Shopping'
   }).click();
 
-}
+  }
   
-async navigateToCart() {
-    await this.page.getByRole('link', { name: 'Cart' }).click();
+  async navigateToCart() {
+    await this.page.getByRole('link', { name: 'Cart' }).first().click();
   }
   
   async verifyCartPage() {
@@ -88,9 +74,8 @@ async navigateToCart() {
   }
 
   async placeOrder() {
-    const placeOrder = this.page.getByRole('link', { name: 'Place Order' })
+    const placeOrder = this.page.getByRole('link', { name: 'Place Order' });
     await expect(placeOrder).toBeVisible();
     await placeOrder.click();
   }
-
 }

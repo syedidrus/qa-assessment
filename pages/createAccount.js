@@ -1,6 +1,6 @@
 import {expect} from '@playwright/test';
 
-export class createAccountPage {
+export class CreateAccountPage {
   constructor(page) {
     this.page = page;
   }
@@ -61,7 +61,7 @@ export class createAccountPage {
   }
 
   async deleteAccount() {
-    await this.page.getByRole('link', { name: ' Delete Account' }).click();
+    await this.page.getByRole('link', { name: 'Delete Account' }).click();
   }
 
   async verifyAccountDeleted() {

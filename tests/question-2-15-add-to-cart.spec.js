@@ -1,13 +1,13 @@
 import {test} from '@playwright/test';
-import { createAccountPage } from '../pages/createAccount';
-import { orderPage } from '../pages/order';
-import { paymentPage } from '../pages/payment';
+import { CreateAccountPage } from '../pages/createAccount';
+import { OrderPage } from '../pages/order';
+import { PaymentPage } from '../pages/payment';
 
 test ('Question 2-15' , async ({page}) => {
     
-    const accountPage = new createAccountPage(page);
-    const order = new orderPage(page);
-    const payment = new paymentPage(page);
+    const accountPage = new CreateAccountPage(page);
+    const order = new OrderPage(page);
+    const payment = new PaymentPage(page);
 
     //Test Data
     const name = 'ayam';
@@ -44,7 +44,6 @@ test ('Question 2-15' , async ({page}) => {
     await accountPage.verifyLoggedIn();
 
     //Step 1: Add products to cart
-    await order.closeAdIfVisible();
     await order.addToCart();
 
     //Step 2: Navigate to cart and verify that cart page is displayed
@@ -62,7 +61,6 @@ test ('Question 2-15' , async ({page}) => {
     await order.placeOrder();
 
     //Step 6: Enter payment details: Name on Card, Card Number, CVC, Expiration date
-    await order.closeAdIfVisible();
     await payment.enterPaymentDetails(nameOnCard, cardNumber, cvc, expirationMonth, expirationYear);
 
     //Step 7: Click 'Pay and Confirm Order' button

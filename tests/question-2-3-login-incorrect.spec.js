@@ -1,9 +1,9 @@
-import { test, expect } from '@playwright/test';
-import { createAccountPage } from '../pages/createAccount';
+import { test } from '@playwright/test';
+import { CreateAccountPage } from '../pages/createAccount';
 
 test ('Question 2-3' , async ({page}) => {
 
-    const loginIncorrectPage = new createAccountPage(page);
+    const loginIncorrectPage = new CreateAccountPage(page);
 
     //Test Data
     const name = 'ayam';
