@@ -23,5 +23,5 @@ npm run test:headed
 ```
 ## View Report
 ```
-npm run test:
+npm run test:report
 ```
