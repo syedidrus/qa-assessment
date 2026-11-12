@@ -2,42 +2,24 @@ import {test} from '@playwright/test';
 import { CreateAccountPage } from '../pages/createAccount';
 import { OrderPage } from '../pages/order';
 import { PaymentPage } from '../pages/payment';
+import { getUserData } from '../data/userData';
+import { getPaymentData } from '../data/paymentData';
 
-test ('Question 2-15' , async ({page}) => {
+test ('Add to Cart and Checkout' , async ({page}) => {
     
     const accountPage = new CreateAccountPage(page);
     const order = new OrderPage(page);
     const payment = new PaymentPage(page);
+    const userData = getUserData();
+    const paymentData = getPaymentData();
 
     //Test Data
-    const name = 'ayam';
-    const email = `ayam${Date.now()}@gmail.com`;
-    const password = 'ayamgoreng001';
-    const birthDate = { day: '30', month: '1', year: '1996' };
-    const newsletter = true;
-    const offers = true;
-    const firstName = 'Ayam';
-    const lastName = 'Goreng';
-    const company = 'Chicken';
-    const address1 = 'Coop, Road 234';
-    const address2 = 'Ciken Street';
-    const country = 'United States';
-    const state = 'New York';
-    const city = 'New York';
-    const zipcode = '10001';
-    const mobileNumber = '+1234567890';
-    const description = 'Happy Birthday';
-    const nameOnCard = 'Ayam Goreng';
-    const cardNumber = '1234567890123456';
-    const cvc = '123';
-    const expirationMonth = '12';
-    const expirationYear = '2027';
 
     //create new account
     await accountPage.navigateToSignup();
-    await accountPage.fillSignupForm(name, email);
-    await accountPage.fillAccountInformation('Mr.', password, birthDate, newsletter, offers);
-    await accountPage.fillPersonalDetails(firstName, lastName, company, address1, address2, country, state, city, zipcode, mobileNumber);
+    await accountPage.fillSignupForm(userData.name, userData.email);
+    await accountPage.fillAccountInformation('Mr.', userData.password, userData.birthDate, userData.newsletter, userData.offers);
+    await accountPage.fillPersonalDetails(userData.firstName, userData.lastName, userData.company, userData.address1, userData.address2, userData.country, userData.state, userData.city, userData.zipcode, userData.mobileNumber);
     await accountPage.createAccount();
     await accountPage.verifyAccountCreated();
     await accountPage.continueAfterAccountCreation();
@@ -54,14 +36,14 @@ test ('Question 2-15' , async ({page}) => {
     await order.proceedCheckout();
 
     //Step 4: Verify Address Details and Review Your Order
-    await order.verifyCheckoutDetails(firstName, lastName, company, address1, address2, country, state, city, zipcode, mobileNumber);
+    await order.verifyCheckoutDetails(userData.firstName, userData.lastName, userData.company, userData.address1, userData.address2, userData.country, userData.state, userData.city, userData.zipcode, userData.mobileNumber);
 
     //Step 5: Enter description in comment text area and click 'Place Order'
-    await order.addDescriptionToOrder(description);
+    await order.addDescriptionToOrder(userData.description);
     await order.placeOrder();
 
     //Step 6: Enter payment details: Name on Card, Card Number, CVC, Expiration date
-    await payment.enterPaymentDetails(nameOnCard, cardNumber, cvc, expirationMonth, expirationYear);
+    await payment.enterPaymentDetails(paymentData.nameOnCard, paymentData.cardNumber, paymentData.cvc, paymentData.expirationMonth, paymentData.expirationYear);
 
     //Step 7: Click 'Pay and Confirm Order' button
     await payment.makePayment();
