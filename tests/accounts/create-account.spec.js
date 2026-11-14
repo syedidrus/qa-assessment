@@ -3,7 +3,7 @@ import { CreateAccountPage } from '../pages/createAccount';
 import { getUserData } from '../data/userData';
 
 test ('Create Account' , async ({page}) => {
-    
+
     const accountPage = new CreateAccountPage(page);
     const userData = getUserData();
     

@@ -1,29 +1,16 @@
-import {test} from '@playwright/test';
-import { CreateAccountPage } from '../pages/createAccount';
-import { OrderPage } from '../pages/order';
-import { PaymentPage } from '../pages/payment';
-import { getUserData } from '../data/userData';
-import { getPaymentData } from '../data/paymentData';
+import { test } from '../fixtures/accountFixtures.js';
+import { CreateAccountPage } from '../../pages/createAccount';
+import { OrderPage } from '../../pages/order';
+import { PaymentPage } from '../../pages/payment';
+import { getPaymentData } from '../../data/paymentData';
 
-test ('Add to Cart and Checkout' , async ({page}) => {
+test ('Add to Cart and Checkout' , async ({page, accountUser}) => {
     
     const accountPage = new CreateAccountPage(page);
     const order = new OrderPage(page);
     const payment = new PaymentPage(page);
-    const userData = getUserData();
+    const userData = accountUser;
     const paymentData = getPaymentData();
-
-    //Test Data
-
-    //create new account
-    await accountPage.navigateToSignup();
-    await accountPage.fillSignupForm(userData.name, userData.email);
-    await accountPage.fillAccountInformation('Mr.', userData.password, userData.birthDate, userData.newsletter, userData.offers);
-    await accountPage.fillPersonalDetails(userData.firstName, userData.lastName, userData.company, userData.address1, userData.address2, userData.country, userData.state, userData.city, userData.zipcode, userData.mobileNumber);
-    await accountPage.createAccount();
-    await accountPage.verifyAccountCreated();
-    await accountPage.continueAfterAccountCreation();
-    await accountPage.verifyLoggedIn();
 
     //Step 1: Add products to cart
     await order.addToCart();

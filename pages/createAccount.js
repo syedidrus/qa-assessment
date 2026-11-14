@@ -7,7 +7,12 @@ export class CreateAccountPage {
 
   async navigateToSignup() {
     await this.page.goto('https://automationexercise.com/');
+    await expect(this.page.getByRole('link', { name: 'Signup / Login' })).toBeVisible();
     await this.page.getByRole('link', { name: ' Signup / Login' }).click();
+  }
+
+  async verifylogin() {
+    
   }
 
   async fillSignupForm(name, email) {
